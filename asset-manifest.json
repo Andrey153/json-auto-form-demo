@@ -1,17 +1,16 @@
 {
   "files": {
-    "main.css": "/json-auto-form-demo/static/css/main.073c9b0a.css",
-    "main.js": "/json-auto-form-demo/static/js/main.a0746bf7.js",
+    "main.css": "/json-auto-form-demo/static/css/main.e6c13ad2.css",
+    "main.js": "/json-auto-form-demo/static/js/main.8fa98ca4.js",
     "static/js/787.6f5473ab.chunk.js": "/json-auto-form-demo/static/js/787.6f5473ab.chunk.js",
     "service-worker.js": "/json-auto-form-demo/service-worker.js",
-    "static/media/logo.svg": "/json-auto-form-demo/static/media/logo.103b5fa18196d5665a7e12318285c916.svg",
     "index.html": "/json-auto-form-demo/index.html",
-    "main.073c9b0a.css.map": "/json-auto-form-demo/static/css/main.073c9b0a.css.map",
-    "main.a0746bf7.js.map": "/json-auto-form-demo/static/js/main.a0746bf7.js.map",
+    "main.e6c13ad2.css.map": "/json-auto-form-demo/static/css/main.e6c13ad2.css.map",
+    "main.8fa98ca4.js.map": "/json-auto-form-demo/static/js/main.8fa98ca4.js.map",
     "787.6f5473ab.chunk.js.map": "/json-auto-form-demo/static/js/787.6f5473ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.a0746bf7.js"
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.8fa98ca4.js"
   ]
 }
