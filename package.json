@@ -13,8 +13,10 @@
   "dependencies": {
     "@monaco-editor/react": "^4.5.0",
     "@types/hjson": "^2.4.3",
+    "@types/js-yaml": "^4.0.5",
     "antd": "^5.4.2",
     "hjson": "^3.2.2",
+    "js-yaml": "^4.1.0",
     "json-auto-form": "^1.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

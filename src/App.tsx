@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Select } from "antd";
+import { Select, Button, Space } from "antd";
 import hjson from "hjson";
+import yaml from "js-yaml";
 import Editor from "@monaco-editor/react";
 import { JSONAutoForm } from "json-auto-form";
 
@@ -49,18 +50,36 @@ function App() {
 
   let JsonValue = {};
 
+  let jsonError = "";
+  let hjsonError = "";
+  let yamlError = "";
+
+  let typeOfContentTxt = "JSON";
+
   try {
     JsonValue = JSON.parse(jsonTxt || "");
-  } catch {
+  } catch (e: any) {
+    jsonError = e.toString();
+    typeOfContentTxt = "HJSON";
     try {
       JsonValue = hjson.parse(jsonTxt || "", {
         // keepWsc: true,
         // legacyRoot: false,
       });
     } catch (e: any) {
-      JsonValue = { error: "hjson parser error", errorTxt: e.toString() };
+      hjsonError = e.toString();
+      typeOfContentTxt = "YAML";
+      try {
+        JsonValue = yaml.load(jsonTxt || "") as any;
+      } catch (e: any) {
+        typeOfContentTxt = "ERR";
+        yamlError = e.toString();
+      }
     }
   }
+
+  if (yamlError && hjsonError && jsonError)
+    JsonValue = { jsonError, hjsonError, yamlError };
 
   // monaco-editor options:
   // https://www.npmjs.com/package/@monaco-editor/react
@@ -70,35 +89,58 @@ function App() {
     <div className="jafd1146-app">
       <div className="jafd1146-app-left">
         <div className="jafd1146-app-left-header">
-          <Select
-            defaultValue="example02"
-            style={{ width: 200 }}
-            value={selectExample}
-            onChange={changeExample}
-            options={[
-              {
-                value: "example",
-                label: "From json text editor",
-              },
-              {
-                value: "example01",
-                label: "Example simple object",
-              },
-              {
-                value: "example02",
-                label: "Example complex object",
-              },
-              {
-                value: "example03",
-                label: "Example big table",
-              },
-            ]}
-          />
+          <Space direction="vertical">
+            <div>
+              This is a demo application of react component "json-auto-form".
+              <br />
+              You can select examples or input your test data in JSON, HJSON, or
+              YAML format.
+            </div>
+            <Space>
+              <Select
+                defaultValue="example02"
+                style={{ width: 200 }}
+                value={selectExample}
+                onChange={changeExample}
+                options={[
+                  {
+                    value: "example",
+                    label: "From text editor",
+                  },
+                  {
+                    value: "example01",
+                    label: "Example simple object",
+                  },
+                  {
+                    value: "example02",
+                    label: "Example complex object",
+                  },
+                  {
+                    value: "example03",
+                    label: "Example big table",
+                  },
+                ]}
+              />
+              {typeOfContentTxt}
+              <Button
+                disabled={
+                  typeOfContentTxt === "JSON" || typeOfContentTxt === "ERR"
+                }
+                type="primary"
+                onClick={() => {
+                  setJsonTxt(JSON.stringify(JsonValue, null, 2));
+                }}
+              >
+                Convert to JSON
+              </Button>
+            </Space>
+          </Space>
         </div>
         <div className="jafd1146-app-left-content">
           <Editor
             height="100%"
-            defaultLanguage="json"
+            // defaultLanguage={typeOfContentTxt === "JSON" ? "json" : "yaml"}
+            defaultLanguage={"yaml"}
             // defaultValue={defValue}
             value={jsonTxt}
             onChange={(v) => {
