@@ -1,0 +1,68 @@
+/* // MIT License
+// Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
+// https://github.com/Andrey153/json-auto-form */
+
+.defaultDarkF1059AF6 {
+  /* https://ant.design/docs/spec/colors */
+
+  --frame1059-auto-form6-color-10: #ffffffff;
+  --frame1059-auto-form6-color-9: #e6f7ff;
+  --frame1059-auto-form6-color-8: #bae7ff;
+  --frame1059-auto-form6-color-7: #91d5ff;
+  --frame1059-auto-form6-color-6: #69c0ff;
+  --frame1059-auto-form6-color-5: #40a9ff;
+  --frame1059-auto-form6-color-4: #1890ff;
+  --frame1059-auto-form6-color-3: #096dd9;
+  --frame1059-auto-form6-color-2: #0050b3;
+  --frame1059-auto-form6-color-1: #003a8c;
+  --frame1059-auto-form6-color-0: #002766;
+
+  --frame1059-auto-form6-color-gold-2: #fff1b8;
+  --frame1059-auto-form6-color-gold-6: #faad14;
+  --frame1059-auto-form6-color-gold-8: #ad6800;
+
+  --frame1059-auto-form6-color-green-2: #f4ffb8;
+  --frame1059-auto-form6-color-green-6: #a0d911;
+  --frame1059-auto-form6-color-green-8: #5b8c00;
+
+  /* --frame1059-auto-form6-header-height: 108px; */
+  --frame1059-auto-form6-header-height: 57px;
+  --frame1059-auto-form6-menu-width: 300px;
+
+  /* --frame1059-auto-form6-transition: left 0.2s, right 0.2s; */
+  --frame1059-auto-form6-transition: 0.2s;
+
+  --frame1059-auto-form6-menu-item-level-step: 16px;
+}
+
+.defaultDarkF1059AF6.frame1059-auto-form6-root {
+  position: relative;
+  /* top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; */
+  width: 100%;
+  height: 650px;
+
+  /* border: 1px solid; */
+
+  display: flex;
+  flex-flow: column;
+
+  color: white;
+}
+
+.defaultDarkF1059AF6.frame1059-auto-form6-root-full-screen {
+  position: fixed !important;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: unset;
+  height: unset;
+}
+
+.defaultDarkF1059AF6 .frame1059-auto-form6-search-input {
+  color: white;
+}
