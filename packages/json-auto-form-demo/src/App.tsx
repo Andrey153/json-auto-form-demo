@@ -1,18 +1,18 @@
-import './App.css'
+import './App.css';
 
-import Editor from '@monaco-editor/react'
-import { Button, Select, Space } from 'antd'
-import hjson from 'hjson'
-import yaml from 'js-yaml'
-import { JSONAutoForm } from 'json-auto-form'
-import React, { useState } from 'react'
+import Editor from '@monaco-editor/react';
+import { Button, Select, Space } from 'antd';
+import hjson from 'hjson';
+import yaml from 'js-yaml';
+import { JSONAutoForm } from 'json-auto-form';
+import React, { useState } from 'react';
 
-import example01 from './examples/example01.json'
-import example02 from './examples/example02.json'
+import example01 from './examples/example01.json';
+import example02 from './examples/example02.json';
 import {
   // generateRandomSentenceArray,
   generateRandomValueArray,
-} from './utils/generateLoremIpsumSentence'
+} from './utils/generateLoremIpsumSentence';
 
 // may be can be useful but return promise
 // const examples = import.meta.glob('./examples/*.json')
@@ -27,57 +27,57 @@ const example03 = generateRandomValueArray(10_000, [
   'number',
   'boolean',
   'string',
-])
+]);
 
 function App() {
-  const [jsonTxt, setJsonTxt] = useState<string | undefined>(JSON.stringify(example02, null, 2))
+  const [jsonTxt, setJsonTxt] = useState<string | undefined>(JSON.stringify(example02, null, 2));
 
-  const [selectExample, setSelectExample] = useState<string | undefined>('example02')
+  const [selectExample, setSelectExample] = useState<string | undefined>('example02');
 
   function changeExample(value: string) {
-    setSelectExample(value)
+    setSelectExample(value);
     if (value === 'example01') {
-      setJsonTxt(JSON.stringify(example01, null, 2))
+      setJsonTxt(JSON.stringify(example01, null, 2));
     }
     if (value === 'example02') {
-      setJsonTxt(JSON.stringify(example02, null, 2))
+      setJsonTxt(JSON.stringify(example02, null, 2));
     }
     if (value === 'example03') {
-      setJsonTxt(JSON.stringify(example03, null, 2))
+      setJsonTxt(JSON.stringify(example03, null, 2));
     }
   }
 
-  let JsonValue = {}
+  let JsonValue = {};
 
-  let jsonError = ''
-  let hjsonError = ''
-  let yamlError = ''
+  let jsonError = '';
+  let hjsonError = '';
+  let yamlError = '';
 
-  let typeOfContentTxt = 'JSON'
+  let typeOfContentTxt = 'JSON';
 
   try {
-    JsonValue = JSON.parse(jsonTxt || '')
+    JsonValue = JSON.parse(jsonTxt || '');
   } catch (e: any) {
-    jsonError = e.toString()
-    typeOfContentTxt = 'HJSON'
+    jsonError = e.toString();
+    typeOfContentTxt = 'HJSON';
     try {
       JsonValue = hjson.parse(jsonTxt || '', {
         // keepWsc: true,
         // legacyRoot: false,
-      })
+      });
     } catch (e: any) {
-      hjsonError = e.toString()
-      typeOfContentTxt = 'YAML'
+      hjsonError = e.toString();
+      typeOfContentTxt = 'YAML';
       try {
-        JsonValue = yaml.load(jsonTxt || '') as any
+        JsonValue = yaml.load(jsonTxt || '') as any;
       } catch (e: any) {
-        typeOfContentTxt = 'ERR'
-        yamlError = e.toString()
+        typeOfContentTxt = 'ERR';
+        yamlError = e.toString();
       }
     }
   }
 
-  if (yamlError && hjsonError && jsonError) JsonValue = { jsonError, hjsonError, yamlError }
+  if (yamlError && hjsonError && jsonError) JsonValue = { jsonError, hjsonError, yamlError };
 
   // monaco-editor options:
   // https://www.npmjs.com/package/@monaco-editor/react
@@ -123,7 +123,7 @@ function App() {
                 disabled={typeOfContentTxt === 'ERR'}
                 type="primary"
                 onClick={() => {
-                  setJsonTxt(JSON.stringify(JsonValue, null, 2))
+                  setJsonTxt(JSON.stringify(JsonValue, null, 2));
                 }}
               >
                 JSON format
@@ -139,8 +139,8 @@ function App() {
             // defaultValue={defValue}
             value={jsonTxt}
             onChange={(v) => {
-              setSelectExample('example')
-              setJsonTxt(v)
+              setSelectExample('example');
+              setJsonTxt(v);
             }}
             options={{ minimap: { enabled: false } }}
           />
@@ -156,7 +156,7 @@ function App() {
         />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -69,80 +69,80 @@ export function generateLoremIpsumSentence(): string {
     'id',
     'est',
     'laborum.',
-  ]
+  ];
 
-  let sentence = ''
+  let sentence = '';
 
   // Randomly select words and build the sentence
   for (let i = 0; i < 10; i++) {
-    const randomIndex: number = Math.floor(Math.random() * words.length)
-    const word: string = words[randomIndex]
+    const randomIndex: number = Math.floor(Math.random() * words.length);
+    const word: string = words[randomIndex];
 
     if (i === 0) {
-      sentence += word.charAt(0).toUpperCase() + word.slice(1) // Capitalize the first word
+      sentence += word.charAt(0).toUpperCase() + word.slice(1); // Capitalize the first word
     } else {
-      sentence += ' ' + word
+      sentence += ' ' + word;
     }
   }
 
   // Add a period at the end of the sentence
-  sentence += '.'
+  sentence += '.';
 
-  return sentence
+  return sentence;
 }
 
 export function generateRandomSentenceArray(numRows: number, numCols: number): string[][] {
-  const sentences: string[][] = []
+  const sentences: string[][] = [];
 
   for (let i = 0; i < numRows; i++) {
-    const row: string[] = []
+    const row: string[] = [];
 
     for (let j = 0; j < numCols; j++) {
-      row.push(generateLoremIpsumSentence())
+      row.push(generateLoremIpsumSentence());
     }
 
-    sentences.push(row)
+    sentences.push(row);
   }
 
-  return sentences
+  return sentences;
 }
 
-type ColumnType = 'boolean' | 'number' | 'string'
+type ColumnType = 'boolean' | 'number' | 'string';
 
-type RandomValueArray = Array<Array<boolean | number | string>>
+type RandomValueArray = Array<Array<boolean | number | string>>;
 
 export function generateRandomValueArray(
   numRows: number,
   columnTypes: ColumnType[],
 ): RandomValueArray {
-  const values: RandomValueArray = []
+  const values: RandomValueArray = [];
 
   for (let i = 0; i < numRows; i++) {
-    const row: Array<boolean | number | string> = []
+    const row: Array<boolean | number | string> = [];
 
     for (let j = 0; j < columnTypes.length; j++) {
-      const columnType = columnTypes[j]
-      let randomValue: boolean | number | string
+      const columnType = columnTypes[j];
+      let randomValue: boolean | number | string;
 
       switch (columnType) {
         case 'boolean':
-          randomValue = Math.random() < 0.5
-          break
+          randomValue = Math.random() < 0.5;
+          break;
         case 'number':
-          randomValue = Math.floor(Math.random() * 100)
-          break
+          randomValue = Math.floor(Math.random() * 100);
+          break;
         case 'string':
-          randomValue = generateLoremIpsumSentence()
-          break
+          randomValue = generateLoremIpsumSentence();
+          break;
         default:
-          throw new Error(`Invalid column type: ${columnType}`)
+          throw new Error(`Invalid column type: ${columnType}`);
       }
 
-      row.push(randomValue)
+      row.push(randomValue);
     }
 
-    values.push(row)
+    values.push(row);
   }
 
-  return values
+  return values;
 }
