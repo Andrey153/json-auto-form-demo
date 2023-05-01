@@ -2,7 +2,7 @@
 // Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
 // https://github.com/Andrey153/json-auto-form
 
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 
 import { Path } from '../../types/autoFormPropsType';
 import { JSONObject, JSONValue } from '../../types/JSONTypes';
@@ -97,6 +97,12 @@ export function MenuElementRecursive({
   if (typeInValue !== 'JSONObject') return null;
 
   const path = level ? [...relativePath, inKey] : [];
+
+  useEffect(() => {
+    if (activePath.toString().startsWith(path.toString())) {
+      setUnfoldSubMenu(true);
+    }
+  }, [activePath]);
 
   // make active menu base on path
   const isActiveItem = !path.find((element, index) => activePath[index] !== element);
