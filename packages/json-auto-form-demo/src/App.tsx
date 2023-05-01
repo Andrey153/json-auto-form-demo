@@ -5,14 +5,15 @@ import { Button, Select, Space } from 'antd';
 import hjson from 'hjson';
 import yaml from 'js-yaml';
 import { JSONAutoForm } from 'json-auto-form';
-import React, { useState } from 'react';
 
+// import React, { useEffect, useState } from 'react';
 import example01 from './examples/example01.json';
 import example02 from './examples/example02.json';
 import {
   // generateRandomSentenceArray,
   generateRandomValueArray,
 } from './utils/generateLoremIpsumSentence';
+import { useIndexedDBStore } from './utils/useIndexedDBStore';
 
 // may be can be useful but return promise
 // const examples = import.meta.glob('./examples/*.json')
@@ -29,22 +30,34 @@ const example03 = generateRandomValueArray(10_000, [
   'string',
 ]);
 
+export type AppStateType = {
+  selectExample: string;
+  jsonTxt: string;
+};
+
 function App() {
-  const [jsonTxt, setJsonTxt] = useState<string | undefined>(JSON.stringify(example02, null, 2));
+  const [appState, setAppState] = useIndexedDBStore<AppStateType>({
+    dbName: 'json-auto-from-demo',
+    storeName: 'state',
+    key: 'jsonTxt',
+    initialState: {
+      selectExample: 'example02',
+      jsonTxt: JSON.stringify(example02, null, 2),
+    },
+  });
 
-  const [selectExample, setSelectExample] = useState<string | undefined>('example02');
-
-  function changeExample(value: string) {
-    setSelectExample(value);
-    if (value === 'example01') {
-      setJsonTxt(JSON.stringify(example01, null, 2));
+  function changeExample(selectExample: string) {
+    let newJsonTxt = appState.jsonTxt;
+    if (selectExample === 'example01') {
+      newJsonTxt = JSON.stringify(example01, null, 2);
     }
-    if (value === 'example02') {
-      setJsonTxt(JSON.stringify(example02, null, 2));
+    if (selectExample === 'example02') {
+      newJsonTxt = JSON.stringify(example02, null, 2);
     }
-    if (value === 'example03') {
-      setJsonTxt(JSON.stringify(example03, null, 2));
+    if (selectExample === 'example03') {
+      newJsonTxt = JSON.stringify(example03, null, 2);
     }
+    setAppState({ selectExample, jsonTxt: newJsonTxt });
   }
 
   let JsonValue = {};
@@ -56,12 +69,12 @@ function App() {
   let typeOfContentTxt = 'JSON';
 
   try {
-    JsonValue = JSON.parse(jsonTxt || '');
+    JsonValue = JSON.parse(appState.jsonTxt || '');
   } catch (e: any) {
     jsonError = e.toString();
     typeOfContentTxt = 'HJSON';
     try {
-      JsonValue = hjson.parse(jsonTxt || '', {
+      JsonValue = hjson.parse(appState.jsonTxt || '', {
         // keepWsc: true,
         // legacyRoot: false,
       });
@@ -69,7 +82,7 @@ function App() {
       hjsonError = e.toString();
       typeOfContentTxt = 'YAML';
       try {
-        JsonValue = yaml.load(jsonTxt || '') as any;
+        JsonValue = yaml.load(appState.jsonTxt || '') as any;
       } catch (e: any) {
         typeOfContentTxt = 'ERR';
         yamlError = e.toString();
@@ -97,7 +110,7 @@ function App() {
               <Select
                 defaultValue="example02"
                 style={{ width: 200 }}
-                value={selectExample}
+                value={appState.selectExample}
                 onChange={changeExample}
                 options={[
                   {
@@ -123,7 +136,7 @@ function App() {
                 disabled={typeOfContentTxt === 'ERR'}
                 type="primary"
                 onClick={() => {
-                  setJsonTxt(JSON.stringify(JsonValue, null, 2));
+                  setAppState({ jsonTxt: JSON.stringify(JsonValue, null, 2) });
                 }}
               >
                 JSON format
@@ -137,10 +150,9 @@ function App() {
             // defaultLanguage={typeOfContentTxt === "JSON" ? "json" : "yaml"}
             defaultLanguage={'yaml'}
             // defaultValue={defValue}
-            value={jsonTxt}
-            onChange={(v) => {
-              setSelectExample('example');
-              setJsonTxt(v);
+            value={appState.jsonTxt}
+            onChange={(jsonTxt) => {
+              setAppState({ selectExample: 'example', jsonTxt });
             }}
             options={{ minimap: { enabled: false } }}
           />
